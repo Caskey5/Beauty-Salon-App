@@ -1,2 +1,10 @@
-# Beauty-Salon-App
-Beauty Salon App in tkinter.
+
+Za testiranje:
+
+Amdin nadimak -> Caskey
+Admin lozinka -> #Caskey123
+
+Zaposlenik nadimak -> I1
+Zaposlenik lozinka -> #I1
+
+Za korisnika se mozete "signup-ati" i testirati sa svojim podacima.
