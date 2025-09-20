@@ -44,9 +44,10 @@ class SignupFrame(tk.Frame):
         ).grid(row=6, column=3, pady=20)
 
     def save_user(self):
-        values = [e.get() for e in self.entries]
+        values = [e.get().strip() for e in self.entries]
         ime, prezime, broj, nadimak, lozinka, potvrda = values
 
+        # Validation
         if not all(values):
             messagebox.showerror("Greška", "Sva polja su obavezna.")
             return False
@@ -59,18 +60,23 @@ class SignupFrame(tk.Frame):
             messagebox.showerror("Greška", "Lozinka mora imati veliko slovo, broj i poseban znak.")
             return False
 
+        # Save user
         filepath = "data/korisnici.csv"
         os.makedirs("data", exist_ok=True)
-        file_exists = os.path.isfile(filepath)
+        
+        try:
+            file_exists = os.path.isfile(filepath)
+            hashed_password = hash_password(lozinka)
 
-        hashed_password = hash_password(lozinka)
+            with open(filepath, mode="a", newline="", encoding="utf-8") as file:
+                writer = csv.writer(file)
+                if not file_exists:
+                    writer.writerow(["Ime", "Prezime", "Broj", "Nadimak", "Lozinka"])
+                writer.writerow([ime, prezime, broj, nadimak, hashed_password])
 
-        with open(filepath, mode="a", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            if not file_exists:
-                writer.writerow(["Ime", "Prezime", "Broj", "Nadimak", "Lozinka"])
-            writer.writerow([ime, prezime, broj, nadimak, hashed_password])
-
-        messagebox.showinfo("Uspješno", "Registracija je uspješna!")
-        self.on_success(ime, prezime, broj)
-        return True 
+            messagebox.showinfo("Uspješno", "Registracija je uspješna!")
+            self.on_success(ime, prezime, broj)
+            return True
+        except IOError:
+            messagebox.showerror("Greška", "Nije moguće sačuvati korisnika.")
+            return False 

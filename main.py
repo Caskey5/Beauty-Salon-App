@@ -16,13 +16,17 @@ class BeautySalonApp:
         self.setup_welcome()
 
     def setup_background(self):
-        bg_image = Image.open("pictures/pozadina.png")
-        bg_image = bg_image.resize((700, 500))
-        self.bg_photo = ImageTk.PhotoImage(bg_image)
-
-        self.bg_label = tk.Label(self.root, image=self.bg_photo)
-        self.bg_label.image = self.bg_photo
-        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        try:
+            bg_image = Image.open("pictures/pozadina.png")
+            bg_image = bg_image.resize((700, 500))
+            self.bg_photo = ImageTk.PhotoImage(bg_image)
+            
+            self.bg_label = tk.Label(self.root, image=self.bg_photo)
+            self.bg_label.image = self.bg_photo
+            self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        except FileNotFoundError:
+            # Fallback to solid color background if image not found
+            self.root.configure(bg="light salmon")
 
     def setup_welcome(self):
         self.welcome_label = tk.Label(
@@ -61,22 +65,33 @@ class BeautySalonApp:
 
     def open_signup(self):
         self.hide_main_buttons()
-        signup_frame = SignupFrame(
+        
+        def on_back():
+            if hasattr(self, 'signup_frame'):
+                self.signup_frame.destroy()
+            self.show_buttons()
+        
+        self.signup_frame = SignupFrame(
             self.root,
             on_success=self.on_signup_success,
-            on_back=lambda: [signup_frame.destroy(), self.show_buttons()]
+            on_back=on_back
         )
-        signup_frame.place(relx=0.5, rely=0.5, anchor="center")
+        self.signup_frame.place(relx=0.5, rely=0.5, anchor="center")
 
     def open_login(self):
         self.hide_main_buttons()
-
-        login_frame = LoginFrame(
+        
+        def on_back():
+            if hasattr(self, 'login_frame'):
+                self.login_frame.destroy()
+            self.show_buttons()
+        
+        self.login_frame = LoginFrame(
             self.root,
             on_success=self.on_login_success,
-            on_back=lambda: [login_frame.destroy(), self.show_buttons()]
+            on_back=on_back
         )
-        login_frame.place(relx=0.5, rely=0.5, anchor="center")
+        self.login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
 
     def on_signup_success(self, ime, prezime, broj):

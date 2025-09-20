@@ -55,18 +55,25 @@ class LoginFrame(tk.Frame):
     def check_credentials(self, filepath, username, password):
         if not os.path.isfile(filepath):
             return False
-        hashed_password = hash_password(password)
-        with open(filepath, newline="", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if row["Nadimak"] == username and row["Lozinka"] == hashed_password:
-                    return True
-        return False
+        
+        try:
+            hashed_password = hash_password(password)
+            with open(filepath, newline="", encoding="utf-8") as file:
+                reader = csv.DictReader(file)
+                return any(
+                    row["Nadimak"] == username and row["Lozinka"] == hashed_password
+                    for row in reader
+                )
+        except (FileNotFoundError, UnicodeDecodeError, KeyError):
+            return False
 
     def get_user_data(self, filepath, username):
-        with open(filepath, newline="", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if row["Nadimak"] == username:
-                    return row
+        try:
+            with open(filepath, newline="", encoding="utf-8") as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if row["Nadimak"] == username:
+                        return row
+        except (FileNotFoundError, UnicodeDecodeError, KeyError):
+            pass
         return None 

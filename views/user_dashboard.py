@@ -4,6 +4,7 @@ from tkcalendar import Calendar
 import csv
 import os
 import datetime
+from utils.data_manager import load_services_from_csv, get_working_hours
 
 class UserDashboard:
     def __init__(self, root, ime, prezime, broj, on_logout):
@@ -64,15 +65,7 @@ class UserDashboard:
         ).grid(row=4, column=0, pady=10)
 
     def load_services_from_csv(self):
-        services = []
-        try:
-            with open("data/usluge.csv", mode="r", encoding="utf-8") as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    services.append(f"{row['Usluga']} -> {row['Cijena']}")
-        except FileNotFoundError:
-            messagebox.showerror("Greška", "Nije moguće učitati usluge.")
-        return services
+        return load_services_from_csv()
 
     def schedule_appointment(self):
         self.clear_root()
@@ -87,25 +80,18 @@ class UserDashboard:
         cal.grid(row=1, column=0, columnspan=3, pady=(10, 20))
         def update_hours(*args):
             selected_date = cal.get_date()
-            # Provjeri je li nedjelja
-            import datetime
-            try:
-                day, month, year = map(int, selected_date.split("-"))
-                dt = datetime.date(year, month, day)
-            except Exception:
-                hour_dropdown['values'] = ["Vrijeme"]
-                hour_dropdown.current(0)
-                return
-            if dt.weekday() == 6:  # Nedjelja
+            
+            # Get working hours for the selected date
+            sati = get_working_hours(selected_date)
+            
+            if not sati:  # Sunday or invalid date
                 messagebox.showwarning("Nedostupno", "Nedjeljom ne radimo. Odaberite drugi dan.")
                 cal.selection_clear()
                 hour_dropdown['values'] = ["Vrijeme"]
                 hour_dropdown.current(0)
                 return
-            if dt.weekday() == 5:  # Subota
-                sati = [f"{i:02d}:00" for i in range(8, 14)]
-            else:
-                sati = [f"{i:02d}:00" for i in range(8, 22)]
+            
+            # Check for booked appointments
             zauzeti = set()
             if os.path.isfile("data/zakazani_termini.csv"):
                 with open("data/zakazani_termini.csv", newline="", encoding="utf-8") as file:
@@ -113,6 +99,7 @@ class UserDashboard:
                     for row in reader:
                         if row["Datum"] == selected_date:
                             zauzeti.add(row["Vrijeme"])
+            
             slobodni = [s for s in sati if s not in zauzeti]
             hour_dropdown['values'] = ["Vrijeme"] + slobodni
             hour_dropdown.current(0)
