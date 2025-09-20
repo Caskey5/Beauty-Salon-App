@@ -199,7 +199,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Caskey5**
-- GitHub: [@Caskey5](https://https://github.com/Caskey5)
+- GitHub: [@Caskey5](https://github.com/Caskey5)
 - Email: siljacantonio.biz@gmail.com
 
 ## 🙏 Acknowledgments
