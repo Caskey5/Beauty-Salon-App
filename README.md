@@ -198,9 +198,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+**Caskey5**
+- GitHub: [@Caskey5](https://https://github.com/Caskey5)
+- Email: siljacantonio.biz@gmail.com
 
 ## 🙏 Acknowledgments
 
@@ -212,7 +212,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If you encounter any issues or have questions:
 
-1. Check the [Issues](https://github.com/yourusername/beauty-salon-app/issues) page
+1. Check the [Issues](https://github.com/Caskey5/beauty-salon-app/issues) page
 2. Create a new issue with detailed description
 3. Contact the maintainer directly
 
