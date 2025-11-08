@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(dir /s \"D:\\Users\\silja\\Code\\Repositories\\Beauty-Salon-App\")",
+      "Bash(mkdir:*)",
+      "Bash(python migrate_data.py:*)",
+      "Bash(python:*)",
+      "Bash(pip install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

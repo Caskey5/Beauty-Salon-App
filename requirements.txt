@@ -1,2 +1,6 @@
-Pillow==10.0.0
-tkcalendar==1.6.1
+# UI Framework
+Pillow>=10.0.0
+tkcalendar>=1.6.1
+
+# Note: tkinter comes pre-installed with Python
+# Note: sqlite3 comes pre-installed with Python
