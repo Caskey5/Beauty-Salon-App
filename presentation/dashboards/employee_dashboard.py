@@ -125,12 +125,15 @@ class EmployeeDashboard(tk.Frame):
             """Get customer information via popup."""
             popup = tk.Toplevel(self)
             popup.title("Customer Information")
-            popup.geometry("300x250")
+            popup.geometry("320x280")
             popup.resizable(False, False)
+            popup.grab_set()  # Make modal
+            popup.focus_set()
 
             tk.Label(popup, text="First Name:", font=("Helvetica", 10)).pack(pady=3)
             first_name_entry = tk.Entry(popup, font=("Helvetica", 10), width=25)
             first_name_entry.pack(pady=3)
+            first_name_entry.focus()
 
             tk.Label(popup, text="Last Name:", font=("Helvetica", 10)).pack(pady=3)
             last_name_entry = tk.Entry(popup, font=("Helvetica", 10), width=25)
@@ -141,12 +144,36 @@ class EmployeeDashboard(tk.Frame):
             phone_entry.pack(pady=3)
 
             def save_info():
-                customer_data['first_name'] = first_name_entry.get().strip()
-                customer_data['last_name'] = last_name_entry.get().strip()
-                customer_data['phone'] = phone_entry.get().strip()
+                first = first_name_entry.get().strip()
+                last = last_name_entry.get().strip()
+                phone = phone_entry.get().strip()
+
+                if not all([first, last, phone]):
+                    messagebox.showerror("Error", "All fields are required!", parent=popup)
+                    return
+
+                customer_data['first_name'] = first
+                customer_data['last_name'] = last
+                customer_data['phone'] = phone
+                popup.destroy()
+                messagebox.showinfo("Success", f"Customer info saved: {first} {last}")
+
+            def cancel_info():
                 popup.destroy()
 
-            tk.Button(popup, text="Save", font=("Helvetica", 10), command=save_info).pack(pady=10)
+            # Buttons frame
+            btn_frame = tk.Frame(popup)
+            btn_frame.pack(pady=15)
+
+            tk.Button(
+                btn_frame, text="Save", font=("Helvetica", 10), width=10,
+                command=save_info, cursor="hand2"
+            ).pack(side=tk.LEFT, padx=5)
+
+            tk.Button(
+                btn_frame, text="Cancel", font=("Helvetica", 10), width=10,
+                command=cancel_info, cursor="hand2"
+            ).pack(side=tk.LEFT, padx=5)
 
         tk.Button(
             main_frame, text="Enter Customer Info", font=("Helvetica", 11),
