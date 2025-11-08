@@ -37,6 +37,20 @@ class BeautySalonApplication:
         self.root.geometry(f"{settings.WINDOW_WIDTH}x{settings.WINDOW_HEIGHT}")
         self.root.resizable(True, True)
 
+        # Windows-specific: Ensure window appears and gets focus
+        self.root.lift()  # Bring window to front
+        self.root.attributes('-topmost', True)  # Temporarily keep on top
+        self.root.after(100, lambda: self.root.attributes('-topmost', False))  # Remove after 100ms
+        self.root.focus_force()  # Force focus to window
+
+        # Center window on screen
+        self.root.update_idletasks()
+        width = self.root.winfo_width()
+        height = self.root.winfo_height()
+        x = (self.root.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.root.winfo_screenheight() // 2) - (height // 2)
+        self.root.geometry(f'{width}x{height}+{x}+{y}')
+
     def _setup_background(self) -> None:
         """Setup background image or fallback color."""
         try:
