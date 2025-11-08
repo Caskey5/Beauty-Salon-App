@@ -6,7 +6,8 @@
       "Bash(mkdir:*)",
       "Bash(python migrate_data.py:*)",
       "Bash(python:*)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []
