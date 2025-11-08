@@ -1,0 +1,22 @@
+
+╔════════════════════════════════════════╗
+║        BEAUTY SALON RECEIPT            ║
+╚════════════════════════════════════════╝
+
+Customer Information:
+  Name: Nikola Mikan
+  Phone: 0976984839
+
+Appointment Details:
+  Date: 2025-11-12
+  Time: 11:00
+  Service: Facial Care
+
+Payment Information:
+  Service Price: 28.0€
+
+═══════════════════════════════════════════
+
+Thank you for choosing our Beauty Salon!
+
+Generated: 2025-11-08 20:37:28
