@@ -17,7 +17,6 @@ This project follows **Clean Architecture** with clear separation of concerns ac
 beauty_salon/
 ├── main.py              # Application entry point (13 lines!)
 ├── di_container.py      # Dependency Injection Container
-├── migrate_data.py      # Data migration tool
 │
 ├── config/              # ⚙️ Configuration & Constants
 │   ├── settings.py      # Application settings
@@ -294,10 +293,6 @@ This project follows:
 - ✅ **Dependency injection**
 
 ---
-
-## 🗃️ Data Migration
-
-If you have old CSV data, migrate it to SQLite:
 
 ```bash
 python migrate_data.py
