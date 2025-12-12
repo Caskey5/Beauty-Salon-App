@@ -1,4 +1,3 @@
-"""Main application class - orchestrates the entire UI."""
 import tkinter as tk
 from pathlib import Path
 from PIL import Image, ImageTk
@@ -11,17 +10,7 @@ from presentation.controllers.app_controller import AppController
 
 
 class BeautySalonApplication:
-    """Main application class.
-
-    Manages the main window, navigation, and application lifecycle.
-    """
-
     def __init__(self, container: DIContainer):
-        """Initialize the application.
-
-        Args:
-            container: Dependency injection container
-        """
         self.container = container
         self.root = tk.Tk()
         self.controller: Optional[AppController] = None
