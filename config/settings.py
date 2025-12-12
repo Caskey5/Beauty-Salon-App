@@ -27,7 +27,7 @@ class Settings:
     # UI Settings
     WINDOW_TITLE = "Beauty Salon"
     WINDOW_WIDTH = 700
-    WINDOW_HEIGHT = 500
+    WINDOW_HEIGHT = 550
     BACKGROUND_IMAGE = ASSETS_DIR / "images" / "background.png"
     BACKGROUND_COLOR = "light salmon"
 
